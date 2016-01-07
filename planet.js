@@ -8,8 +8,6 @@ function Planet(radius, distanceFromSun, orbitalVelocity) {
 	this.angle = 0;
 	this.orbitalVelocity = -orbitalVelocity;
 
-	this.lastZoomUsed;
-
 	// graphical stuff
 	this.orbit = new createjs.Shape();
 	stage.addChild(this.orbit);
@@ -18,9 +16,9 @@ function Planet(radius, distanceFromSun, orbitalVelocity) {
 	stage.addChild(this.shape);
 }
 
-Planet.prototype.update = function() {
+Planet.prototype.update = function(forceTotalUpdate) {
 	// when user zooms in/out
-	if (this.lastZoomUsed != zoom) {
+	if (forceTotalUpdate) {
 		// orbit
 		this.orbit.graphics.clear();
 		this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.distanceFromSun * zoom);
@@ -61,7 +59,7 @@ function createPlanets() {
 
 function updatePlanets() {
 	for (var i = 0; i < planets.length; i++)
-		planets[i].update();
+		planets[i].update(true);
 }
 
 function updatePlanetsAngle(delta) {
