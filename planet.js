@@ -8,6 +8,8 @@ function Planet(radius, distanceFromSun, orbitalVelocity) {
 	this.angle = 0;
 	this.orbitalVelocity = -orbitalVelocity;
 
+	this.lastZoomUsed;
+
 	// graphical stuff
 	this.orbit = new createjs.Shape();
 	stage.addChild(this.orbit);
@@ -17,18 +19,24 @@ function Planet(radius, distanceFromSun, orbitalVelocity) {
 }
 
 Planet.prototype.update = function() {
+	// when user zooms in/out
+	if (this.lastZoomUsed != zoom) {
+		// orbit
+		this.orbit.graphics.clear();
+		this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.distanceFromSun * zoom);
+
+		// circle
+		this.shape.graphics.clear();
+
+		var virtualRadius = this.radius * zoom * planetRadiusMultiplier;
+		if (virtualRadius > 0)
+			this.shape.graphics.beginFill('black').drawCircle(canvas.width / 2, canvas.height / 2, virtualRadius);
+
+		this.lastZoomUsed = zoom;
+	}
+
 	this.shape.x = Math.cos(this.angle) * this.distanceFromSun * zoom;
 	this.shape.y = Math.sin(this.angle) * this.distanceFromSun * zoom;
-
-	this.orbit.graphics.clear();
-	this.shape.graphics.clear();
-
-	this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.distanceFromSun * zoom);
-
-	var realRadius = this.radius * zoom * planetRadiusMultiplier;
-
-	if (realRadius > 0)
-		this.shape.graphics.beginFill('black').drawCircle(canvas.width / 2, canvas.height / 2, realRadius);
 }
 
 Planet.prototype.setAngle = function(delta) {
