@@ -26,10 +26,12 @@ function addMouseWheelListener() {
 	if (canvas.addEventListener) {
 		// IE9, Chrome, Safari, Opera
 		canvas.addEventListener("mousewheel", MouseWheelHandler, false);
+
 		// Firefox
 		canvas.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
 	} else {
-		canvas.attachEvent("onmousewheel", MouseWheelHandler); // IE 6/7/8
+		// IE 6/7/8
+		canvas.attachEvent("onmousewheel", MouseWheelHandler);
 	}
 }
 

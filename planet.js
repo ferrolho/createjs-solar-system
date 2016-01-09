@@ -88,7 +88,7 @@ function createPlanets() {
 
 		var distanceFromSun = beltCenter + fx * maxDeviation;
 
-		var radius = randomBetween(200, 600);
+		var radius = randomBetween(200, 400);
 		var orbitalVelocity = randomBetween(4, 30);
 
 		var asteroid = new Planet(radius, distanceFromSun, orbitalVelocity);
