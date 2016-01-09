@@ -1,9 +1,13 @@
+include('scene.js', 'planet.js', function() {
+	main();
+});
+
 var canvas;
 var stage;
 
 const tenToThe6 = 1000000;
 
-function init() {
+function main() {
 	// resize event listener
 	window.addEventListener('resize', resize, false);
 

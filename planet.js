@@ -15,6 +15,8 @@ function Planet(radius, distanceFromSun, orbitalVelocity, showOrbit) {
 
 	this.showOrbit = showOrbit;
 
+	this.moons = [];
+
 	// graphical stuff
 	if (this.showOrbit) {
 		this.orbit = new createjs.Shape();
@@ -23,6 +25,10 @@ function Planet(radius, distanceFromSun, orbitalVelocity, showOrbit) {
 
 	this.shape = new createjs.Shape();
 	stage.addChild(this.shape);
+}
+
+Planet.prototype.addMoon = function(radius, distanceFromPlanet, orbitalVelocity, showOrbit) {
+
 }
 
 Planet.prototype.update = function(forceTotalUpdate) {
@@ -77,6 +83,9 @@ function createPlanets() {
 	var uranus = new Planet(25362.0, 2872.5 * tenToThe6, 6.8, true); planets.push(uranus);
 	var neptune = new Planet(24622.0, 4495.1 * tenToThe6, 5.4, true); planets.push(neptune);
 	var pluto = new Planet(1186.0, 5906.3 * tenToThe6, 4.67, true); planets.push(pluto);
+
+	// moons
+	earth.addMoon(1737.1, 0.3844 * tenToThe6, 1.022, true);
 
 	// asteroids - main belt
 	var beltCenter = (minBeltDistanceFromSun + maxBeltDistanceFromSun) / 2.0;
