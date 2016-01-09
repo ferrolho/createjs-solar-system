@@ -7,13 +7,11 @@ const planetRadiusMultiplier = 1000.0;
 */
 function Planet(radius, distanceFromSun, orbitalVelocity, showOrbit) {
 	this.radius = radius;
-
 	this.distanceFromSun = distanceFromSun;
+	this.orbitalVelocity = -orbitalVelocity;
+	this.showOrbit = showOrbit;
 
 	this.angle = randomBetween(0, 360);
-	this.orbitalVelocity = -orbitalVelocity;
-
-	this.showOrbit = showOrbit;
 
 	this.moons = [];
 
@@ -27,8 +25,8 @@ function Planet(radius, distanceFromSun, orbitalVelocity, showOrbit) {
 	stage.addChild(this.shape);
 }
 
-Planet.prototype.addMoon = function(radius, distanceFromPlanet, orbitalVelocity, showOrbit) {
-
+Planet.prototype.addMoon = function(radius, orbitRadius, orbitalVelocity, showOrbit) {
+	var moon = new Moon(this, radius, orbitRadius, orbitalVelocity, showOrbit); this.moons.push(moon);
 }
 
 Planet.prototype.update = function(forceTotalUpdate) {
@@ -54,23 +52,16 @@ Planet.prototype.update = function(forceTotalUpdate) {
 	this.shape.y = Math.sin(this.angle) * this.distanceFromSun * zoom;
 }
 
-const timeMultiplier = 0.000005;
-
 Planet.prototype.setAngle = function(delta) {
 	this.angle = (this.angle + timeMultiplier * delta * this.orbitalVelocity) % 360;
-
 	this.update();
+
+	for (var i = 0; i < this.moons.length; i++)
+		this.moons[i].setAngle(delta);
 }
 
-var planets = [];
-
-const minBeltDistanceFromSun = 329.1 * 1000000;
-const maxBeltDistanceFromSun = 478.7 * 1000000;
-var asteroidsBelt = [];
-
-function randomBetween(min, max) {
-	return Math.random() * (max - min) + min;
-}
+const minBeltDistanceFromSun = 329.1 * tenToThe6;
+const maxBeltDistanceFromSun = 478.7 * tenToThe6;
 
 function createPlanets() {
 	// planets

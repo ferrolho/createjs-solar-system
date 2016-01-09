@@ -1,5 +1,8 @@
 var bg, titleLabel, descriptionLabel, fpsLabel;
 
+var planets = [];
+var asteroidsBelt = [];
+
 function createSceneElements() {
 	createBackground();
 	createPlanets();

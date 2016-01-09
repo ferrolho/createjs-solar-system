@@ -1,11 +1,12 @@
-include('scene.js', 'planet.js', function() {
+const tenToThe6 = 1000000;
+const timeMultiplier = 0.000005;
+
+include('scene.js', 'planet.js', 'moon.js', function() {
 	main();
 });
 
 var canvas;
 var stage;
-
-const tenToThe6 = 1000000;
 
 function main() {
 	// resize event listener
@@ -24,6 +25,10 @@ function main() {
 	// Ticker
 	createjs.Ticker.setFPS(120);
 	createjs.Ticker.addEventListener('tick', tick);
+}
+
+function randomBetween(min, max) {
+	return Math.random() * (max - min) + min;
 }
 
 function addMouseWheelListener() {
