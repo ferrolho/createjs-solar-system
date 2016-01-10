@@ -1,14 +1,18 @@
 const tenToThe6 = 1000000;
 const timeMultiplier = 0.000005;
 
-include('scene.js', 'planet.js', 'moon.js', function() {
+include('scene.js', 'solarSystem.js', 'planet.js', 'moon.js', function() {
 	main();
 });
 
 var canvas;
 var stage;
+var solarSystem;
 
 function main() {
+	solarSystem = new SolarSystem();
+	createGUI();
+
 	// resize event listener
 	window.addEventListener('resize', resize, false);
 
@@ -19,12 +23,29 @@ function main() {
 	addMouseWheelListener();
 
 	createSceneElements();
-	
+
 	resize();
 
 	// Ticker
 	createjs.Ticker.setFPS(120);
 	createjs.Ticker.addEventListener('tick', tick);
+}
+
+function createGUI() {
+	var gui = new dat.GUI();
+	//gui.close();
+
+	//var f1 = gui.addFolder('Views');
+	//f1.add(solarSystem, 'speed');
+
+	gui.add(solarSystem, 'showAsteroidsMainBelt');
+
+	gui.add(solarSystem, 'showPlanetaryOrbits')
+	.onChange(function(value) {
+		solarSystem.togglePlanetaryOrbits();
+	});
+
+	//gui.add(solarSystem, 'speed', -5, 5);
 }
 
 function randomBetween(min, max) {

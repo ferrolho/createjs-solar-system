@@ -35,7 +35,9 @@ Planet.prototype.update = function(forceTotalUpdate) {
 		// orbit
 		if (this.showOrbit) {
 			this.orbit.graphics.clear();
-			this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.distanceFromSun * zoom);
+
+			if (solarSystem.showPlanetaryOrbits)
+				this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.distanceFromSun * zoom);
 		}
 
 		// circle
@@ -65,15 +67,15 @@ const maxBeltDistanceFromSun = 478.7 * tenToThe6;
 
 function createPlanets() {
 	// planets
-	var mercury = new Planet(2439.7, 57.9 * tenToThe6, 47.4, true); planets.push(mercury);
-	var venus = new Planet(6051.8, 108.2 * tenToThe6, 35.0, true); planets.push(venus);
-	var earth = new Planet(6371.0, 149.6 * tenToThe6, 29.78, true); planets.push(earth);
-	var mars = new Planet(3389.5, 227.9 * tenToThe6, 24.1, true); planets.push(mars);
-	var jupiter = new Planet(69911.0, 778.6 * tenToThe6, 13.1, true); planets.push(jupiter);
-	var saturn = new Planet(58232.0, 1433.5 * tenToThe6, 9.7, true); planets.push(saturn);
-	var uranus = new Planet(25362.0, 2872.5 * tenToThe6, 6.8, true); planets.push(uranus);
-	var neptune = new Planet(24622.0, 4495.1 * tenToThe6, 5.4, true); planets.push(neptune);
-	var pluto = new Planet(1186.0, 5906.3 * tenToThe6, 4.67, true); planets.push(pluto);
+	var mercury = new Planet(2439.7, 57.9 * tenToThe6, 47.4, true); solarSystem.planets.push(mercury);
+	var venus = new Planet(6051.8, 108.2 * tenToThe6, 35.0, true); solarSystem.planets.push(venus);
+	var earth = new Planet(6371.0, 149.6 * tenToThe6, 29.78, true); solarSystem.planets.push(earth);
+	var mars = new Planet(3389.5, 227.9 * tenToThe6, 24.1, true); solarSystem.planets.push(mars);
+	var jupiter = new Planet(69911.0, 778.6 * tenToThe6, 13.1, true); solarSystem.planets.push(jupiter);
+	var saturn = new Planet(58232.0, 1433.5 * tenToThe6, 9.7, true); solarSystem.planets.push(saturn);
+	var uranus = new Planet(25362.0, 2872.5 * tenToThe6, 6.8, true); solarSystem.planets.push(uranus);
+	var neptune = new Planet(24622.0, 4495.1 * tenToThe6, 5.4, true); solarSystem.planets.push(neptune);
+	var pluto = new Planet(1186.0, 5906.3 * tenToThe6, 4.67, true); solarSystem.planets.push(pluto);
 
 	// moons
 	earth.addMoon(1737.1, 0.3844 * tenToThe6, 1.022, true);
@@ -98,16 +100,16 @@ function createPlanets() {
 }
 
 function updatePlanets() {
-	for (var i = 0; i < planets.length; i++)
-		planets[i].update(true);
+	for (var i = 0; i < solarSystem.planets.length; i++)
+		solarSystem.planets[i].update(true);
 
 	for (var i = 0; i < asteroidsBelt.length; i++)
 		asteroidsBelt[i].update(true);
 }
 
 function updatePlanetsAngle(delta) {
-	for (var i = 0; i < planets.length; i++)
-		planets[i].setAngle(delta);
+	for (var i = 0; i < solarSystem.planets.length; i++)
+		solarSystem.planets[i].setAngle(delta);
 
 	for (var i = 0; i < asteroidsBelt.length; i++)
 		asteroidsBelt[i].setAngle(delta);
