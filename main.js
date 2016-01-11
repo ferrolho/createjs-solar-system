@@ -1,18 +1,28 @@
 const tenToThe6 = 1000000;
 const timeMultiplier = 0.000005;
 
-include('scene.js', 'solarSystem.js', 'planet.js', 'moon.js', function() {
-	main();
-});
-
 var canvas;
 var stage;
 var solarSystem;
 
-function main() {
-	solarSystem = new SolarSystem();
-	createGUI();
+function init() {
+	initCreateJS();
 
+	include(
+		'utilities.js',
+		'scene.js',
+		'solarSystem.js',
+		'entities/entity.js',
+		'entities/planet.js',
+		'entities/asteroid.js',
+		'entities/moon.js',
+		
+		function() {
+			main();
+		});
+}
+
+function initCreateJS() {
 	// resize event listener
 	window.addEventListener('resize', resize, false);
 
@@ -21,8 +31,13 @@ function main() {
 	stage = new createjs.Stage(canvas);
 
 	addMouseWheelListener();
+}
 
+function main() {
+	solarSystem = new SolarSystem();
 	createSceneElements();
+
+	createGUI();
 
 	resize();
 
@@ -46,10 +61,6 @@ function createGUI() {
 	});
 
 	//gui.add(solarSystem, 'speed', -5, 5);
-}
-
-function randomBetween(min, max) {
-	return Math.random() * (max - min) + min;
 }
 
 function addMouseWheelListener() {

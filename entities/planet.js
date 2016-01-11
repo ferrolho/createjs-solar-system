@@ -2,12 +2,12 @@ const planetRadiusMultiplier = 1000.0;
 
 /**
 * radius km
-* distanceFromSun 10^6 km
+* orbitRadius 10^6 km
 * orbitalVelocity km/s
 */
-function Planet(radius, distanceFromSun, orbitalVelocity, showOrbit) {
+function Planet(radius, orbitRadius, orbitalVelocity, showOrbit) {
 	this.radius = radius;
-	this.distanceFromSun = distanceFromSun;
+	this.orbitRadius = orbitRadius;
 	this.orbitalVelocity = -orbitalVelocity;
 	this.showOrbit = showOrbit;
 
@@ -37,7 +37,7 @@ Planet.prototype.update = function(forceTotalUpdate) {
 			this.orbit.graphics.clear();
 
 			if (solarSystem.showPlanetaryOrbits)
-				this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.distanceFromSun * zoom);
+				this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.orbitRadius * zoom);
 		}
 
 		// circle
@@ -50,8 +50,8 @@ Planet.prototype.update = function(forceTotalUpdate) {
 		this.lastZoomUsed = zoom;
 	}
 
-	this.shape.x = Math.cos(this.angle) * this.distanceFromSun * zoom;
-	this.shape.y = Math.sin(this.angle) * this.distanceFromSun * zoom;
+	this.shape.x = Math.cos(this.angle) * this.orbitRadius * zoom;
+	this.shape.y = Math.sin(this.angle) * this.orbitRadius * zoom;
 }
 
 Planet.prototype.setAngle = function(delta) {
@@ -61,9 +61,6 @@ Planet.prototype.setAngle = function(delta) {
 	for (var i = 0; i < this.moons.length; i++)
 		this.moons[i].setAngle(delta);
 }
-
-const minBeltDistanceFromSun = 329.1 * tenToThe6;
-const maxBeltDistanceFromSun = 478.7 * tenToThe6;
 
 function createPlanets() {
 	// planets
@@ -79,24 +76,6 @@ function createPlanets() {
 
 	// moons
 	earth.addMoon(1737.1, 0.3844 * tenToThe6, 1.022, true);
-
-	// asteroids - main belt
-	var beltCenter = (minBeltDistanceFromSun + maxBeltDistanceFromSun) / 2.0;
-	var maxDeviation = maxBeltDistanceFromSun - beltCenter;
-
-	for (var i = 0; i < 1500; i++) {
-		var randomX = randomBetween(-1, 1);
-		var fx = (randomX > 0 ? 1 : -1) * randomX * randomX;
-
-		var distanceFromSun = beltCenter + fx * maxDeviation;
-
-		var radius = randomBetween(200, 400);
-		var orbitalVelocity = randomBetween(4, 30);
-
-		var asteroid = new Planet(radius, distanceFromSun, orbitalVelocity);
-
-		asteroidsBelt.push(asteroid);
-	};
 }
 
 function updatePlanets() {

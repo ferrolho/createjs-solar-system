@@ -3,7 +3,7 @@ var bg, titleLabel, descriptionLabel, fpsLabel;
 var asteroidsBelt = [];
 
 function createSceneElements() {
-	createBackground();
+	//createBackground();
 	createPlanets();
 	createTitle();
 	createDescription();
@@ -11,7 +11,7 @@ function createSceneElements() {
 }
 
 function updateSceneElements() {
-	updateBackground();
+	//updateBackground();
 	updatePlanets();
 }
 
