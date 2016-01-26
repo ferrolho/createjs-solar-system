@@ -20,8 +20,20 @@ SolarSystem.prototype.initDatGuiElements = function() {
 	this.speed = 0.8;
 }
 
+SolarSystem.prototype.toggleAsteroidsMainBelt = function() {
+	for (var i = 0; i < asteroidsBelt.length; i++) {
+		if (this.showAsteroidsMainBelt)
+			stage.addChild(asteroidsBelt[i].shape);
+		else
+			stage.removeChild(asteroidsBelt[i].shape);
+	}
+}
+
+/**
+* Listens to this.showPlanetaryOrbits changes.
+*/
 SolarSystem.prototype.togglePlanetaryOrbits = function() {
-	console.log('togglePlanetaryOrbits: ' + this.showPlanetaryOrbits)
+	updatePlanets();
 }
 
 const minBeltDistanceFromSun = 329.1 * tenToThe6;

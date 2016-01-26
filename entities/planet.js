@@ -9,14 +9,13 @@ function Planet(radius, orbitRadius, orbitalVelocity, showOrbit) {
 	this.radius = radius;
 	this.orbitRadius = orbitRadius;
 	this.orbitalVelocity = -orbitalVelocity;
-	this.showOrbit = showOrbit;
 
 	this.angle = randomBetween(0, 360);
 
 	this.moons = [];
 
 	// graphical stuff
-	if (this.showOrbit) {
+	if (solarSystem.showPlanetaryOrbits) {
 		this.orbit = new createjs.Shape();
 		stage.addChild(this.orbit);
 	}
@@ -33,12 +32,9 @@ Planet.prototype.update = function(forceTotalUpdate) {
 	// when user zooms in/out
 	if (forceTotalUpdate) {
 		// orbit
-		if (this.showOrbit) {
-			this.orbit.graphics.clear();
-
-			if (solarSystem.showPlanetaryOrbits)
-				this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.orbitRadius * zoom);
-		}
+		this.orbit.graphics.clear();
+		if (solarSystem.showPlanetaryOrbits)
+			this.orbit.graphics.beginStroke('rgb(210, 210, 210)').drawCircle(canvas.width / 2, canvas.height / 2, this.orbitRadius * zoom);
 
 		// circle
 		this.shape.graphics.clear();

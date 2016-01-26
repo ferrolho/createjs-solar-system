@@ -53,7 +53,10 @@ function createGUI() {
 	//var f1 = gui.addFolder('Views');
 	//f1.add(solarSystem, 'speed');
 
-	gui.add(solarSystem, 'showAsteroidsMainBelt');
+	gui.add(solarSystem, 'showAsteroidsMainBelt')
+	.onChange(function(value) {
+		solarSystem.toggleAsteroidsMainBelt();
+	});
 
 	gui.add(solarSystem, 'showPlanetaryOrbits')
 	.onChange(function(value) {
